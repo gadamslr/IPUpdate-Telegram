@@ -3,13 +3,20 @@ import os.path
 import time
 import socket
 # When launched on boot, time is needed for a network  connection to be established
-#time.sleep(15)
+time.sleep(15)
 
+###Config###
+SettingsFile = "Settings.cfg"  # Location of settings file to be used
+def GetSetting(Option, File=SettingsFile):
+    with open(File) as Settings:
+        for line in Settings:
+            if Option in line:
+                SettingResult = line.split("=", 1)[1]
+                SettingResult = SettingResult.rstrip()
+                return SettingResult
 
-###Telegram config###
-
-CHATID = ""  # Chat ID for telegram user/group
-TOKEN = ""  # Bot token for telegram bot
+CHATID = GetSetting("CHATID")  # Chat ID for telegram user/group
+TOKEN = GetSetting("TOKEN")  # Bot token for telegram bot
 URL = "http://api.telegram.org/bot{0}/sendMessage".format(TOKEN)
 prefix = "[{0}] ~".format(socket.gethostname())
 
