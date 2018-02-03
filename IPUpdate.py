@@ -30,9 +30,6 @@ def sendmsg404(ip):
     MSG = "{0} Lastip address was not found! Current IP is: {1}".format(prefix, ip)
     r = requests.post("{0}?chat_id={1}&text={2}".format(URL, CHATID, MSG))
 
-###End of Telegram config###
-
-
 ###IP Functions###
 def getip():
     website = requests.get('http://api.ipify.org')
@@ -61,11 +58,9 @@ def CheckConnection(connected):
             getip()
         except:
             print("getip failed, likely there's no web connection - looping until solved")
-            time.sleep(2)
+            time.sleep(4)
         connected = True
         print("getip success!!")
-###End of IP Functions###
-
 
 # Main loop for checking public IP address
 def checkip(ipchange):
@@ -82,7 +77,6 @@ def checkip(ipchange):
 
 
 ###MAIN###
-#getip()
 connected = False
 ipchange = False
 CheckConnection(connected)
@@ -104,5 +98,5 @@ else:
     setLip(getip())
     ipchange = False
 
-# Run main loop
+# Run main loop #
 checkip(ipchange)
