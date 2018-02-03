@@ -1,7 +1,8 @@
 import requests
-import os.path
+import os
 import time
 import socket
+import platform
 # When launched on boot, time is needed for a network  connection to be established
 time.sleep(15)
 
@@ -53,19 +54,24 @@ def setLip(ip):
     lastip = ip
 
 def CheckConnection(connected):
+    OS = platform.platform()
     while connected == False:
-        try:
-            getip()
-        except:
-            print("getip failed, likely there's no web connection - looping until solved")
-            time.sleep(4)
-        connected = True
-        print("getip success!!")
+        if "Windows" in OS: # Windows and Unix have diffrent parameters for ping counts becuase standards
+            pingtest = os.system("ping -n 1 8.8.8.8")
+        else:
+            pingtest = os.system("ping -c 1 8.8.8.8")
+
+        if pingtest == 0:
+            print("Network good!")
+            connected = True
+        else:
+            print("Network Bad will loop!")
 
 # Main loop for checking public IP address
 def checkip(ipchange):
     while ipchange == False:
         print("\nLooping\n")
+        CheckConnection(False) # Make sure still connected before trying to get an IP!
         if getip() == getLip():
             print("IP matched! Sleeping for a few minutes!")
             time.sleep(120)
@@ -77,9 +83,7 @@ def checkip(ipchange):
 
 
 ###MAIN###
-connected = False
-ipchange = False
-CheckConnection(connected)
+CheckConnection(False)
 
 # Check if IP address has changed from last run
 if os.path.exists("lastip.txt"):
