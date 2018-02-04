@@ -7,7 +7,7 @@ import platform
 time.sleep(15)
 
 ###Config###
-SettingsFile = "Settings.cfg"  # Location of settings file to be used
+SettingsFile = "TelegramSettings.cfg"  # Location of settings file to be used
 def GetSetting(Option, File=SettingsFile):
     with open(File) as Settings:
         for line in Settings:
