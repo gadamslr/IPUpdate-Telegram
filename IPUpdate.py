@@ -69,6 +69,7 @@ def CheckConnection(connected):
 
 # Main loop for checking public IP address
 def checkip(ipchange):
+    #test
     while ipchange == False:
         print("\nLooping\n")
         CheckConnection(False) # Make sure still connected before trying to get an IP!
